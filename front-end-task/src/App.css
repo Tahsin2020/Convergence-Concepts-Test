@@ -1,11 +1,15 @@
-div {
-  background-color: lightblue;
-  border: 1px solid black;
-  height: 100px;
-  width: 500px;
-  overflow-x: scroll;
-}
-p {
+.Photo {
+  color: white;
   width: 1000px;
-  margin: 10px;
+  border: 1px solid white;
+  margin: 100px;
+}
+.container {
+  cursor: grab;
+  display: flex;
+  flex-direction: row;
+  background-color: black;
+  border: 1px solid black;
+  height: 98vh;
+  overflow-x: scroll;
 }
