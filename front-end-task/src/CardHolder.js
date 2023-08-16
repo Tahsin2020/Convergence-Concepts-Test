@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
+// import Card from "./Card";
 import { useQuery } from "@tanstack/react-query";
+
 async function fetchData() {
   const { data } = await axios.get(
     "https://jsonplaceholder.typicode.com/photos"
@@ -9,7 +11,11 @@ async function fetchData() {
 }
 
 export const CardHolder = () => {
-  const { isLoading, isError, error, data } = useQuery(["users"], fetchData);
+  const { isLoading, isError, error, data } = useQuery(["photos"], fetchData, {
+    structuralSharing: false,
+    staleTime: Infinity,
+    cacheTime: Infinity, // 10 minutes
+  });
   if (isLoading) {
     return <div>Data is loading...</div>;
   }
@@ -17,15 +23,12 @@ export const CardHolder = () => {
     return <div>Error! {error.message}</div>;
   }
   return (
-    <ul className="list-group">
+    <ul className="container">
       {data.map((res, i) => {
         return (
-          <li className="list-group-item mb-3" key={i}>
-            <h1>{res.albumId}</h1>
-            <h2>{res.id}</h2>
-            <h3>{res.title}</h3>
-            <h4>{res.url}</h4>
-            <h5>{res.thumbnailUrl}</h5>
+          <li className="Photo" key={i}>
+            <h1 className="Title">{res.title}</h1>
+            <img src={res.url} alt={res.thumbnailUrl} className="Image"></img>
           </li>
         );
       })}

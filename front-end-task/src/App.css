@@ -1,15 +1,36 @@
+.App {
+  background-color: black;
+}
+
 .Photo {
   color: white;
-  width: 1000px;
-  border: 1px solid white;
   margin: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .container {
-  cursor: grab;
+  width: fit-content;
   display: flex;
   flex-direction: row;
   background-color: black;
-  border: 1px solid black;
-  height: 98vh;
-  overflow-x: scroll;
+}
+ul {
+  list-style: none;
+}
+
+li {
+  display: inline-block;
+}
+.Title {
+  z-index: 2;
+  position: absolute;
+  width: 600px;
+  transform: rotate(-45deg);
+}
+.Image {
+  z-index: 1;
+  border: 1cm white solid;
+  border-radius: 1cm;
+  box-shadow: rgba(184, 190, 7, 0.35) 0cm 2cm 2cm;
 }
