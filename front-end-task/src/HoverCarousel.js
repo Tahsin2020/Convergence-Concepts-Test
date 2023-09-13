@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import $ from "jquery";
+import $, { data } from "jquery";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 async function fetchData() {
@@ -10,13 +10,8 @@ async function fetchData() {
 }
 
 const HoverCarousel = () => {
-  var images = [
-    "https://www.nationsonline.org/map_small/afghanistan_small_map.jpg",
-    "https://www.nationsonline.org/map_small/afghanistan_small_map.jpg",
-    "https://www.nationsonline.org/map_small/afghanistan_small_map.jpg",
-    "https://www.nationsonline.org/map_small/afghanistan_small_map.jpg",
-    "https://www.nationsonline.org/map_small/afghanistan_small_map.jpg",
-  ];
+  var titles = [];
+  var images = [];
 
   useEffect(() => {
     const scope = $(".carousel");
@@ -89,15 +84,32 @@ const HoverCarousel = () => {
     };
   }, [images]);
 
-  const { isLoading, isError, error, data } = useQuery(["users"], fetchData);
-  if (isLoading) {
-    return <div>Data is loading...</div>;
+  var returnedphotos = JSON.parse(sessionStorage.getItem("photos"));
+
+  var { isLoading, isError, error, data } = useQuery(["users"], fetchData, {
+    skip: returnedphotos === true,
+  });
+
+  if (!returnedphotos) {
+    sessionStorage.setItem("photos", JSON.stringify(data));
+  } else {
+    data = returnedphotos;
+    isLoading = true;
+    isError = false;
   }
-  if (isError) {
-    return <div>Error! {error.message}</div>;
-  }
+
+  // if (isLoading) {
+  //   return <div style={{ color: "white" }}>Data is loading...</div>;
+  // }
+  // if (isError) {
+  //   return <div style={{ color: "white" }}>Error! {error.message}</div>;
+  // }
+
   data.map((datae) => {
-    images.push(datae.url);
+    var temp = [];
+    temp.push(datae.url);
+    titles.push(datae.title);
+    images = images.concat(temp);
   });
 
   return (
@@ -127,6 +139,7 @@ const HoverCarousel = () => {
             key={index}
             style={{ display: "inline-block", width: "33.33%", flexShrink: 0 }}
           >
+            <p style={{ color: "white" }}>{titles[index]}</p>
             <img
               src={src}
               alt={`Carousel Item ${index + 1}`}
