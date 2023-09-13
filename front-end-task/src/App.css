@@ -1,18 +1,28 @@
-.App {
+html {
+  scroll-behavior: smooth;
   background-color: black;
+}
+
+.App {
+  width: 100%;
 }
 
 .Photo {
   color: white;
   margin: 100px;
+  margin-left: 25vw;
+  margin-right: 25vw;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 .container {
+  width: 100%;
   width: fit-content;
+  justify-content: center;
   display: flex;
   flex-direction: row;
+  align-items: center;
   background-color: black;
 }
 ul {
@@ -33,4 +43,9 @@ li {
   border: 1cm white solid;
   border-radius: 1cm;
   box-shadow: rgba(184, 190, 7, 0.35) 0cm 2cm 2cm;
+}
+.Button {
+  margin-left: 44vw;
+  margin-top: -250px;
+  position: fixed;
 }
