@@ -9,6 +9,21 @@ async function fetchData() {
   return data;
 }
 
+function randomize(arr, n) {
+  // Start from the last element and swap one by one. We don't
+  // need to run for the first element that's why i > 0
+  for (var i = n - 1; i >= 0; i--) {
+    // Pick a random index from 0 to i
+    var j = Math.floor(Math.random() * (i + 1));
+
+    // Swap arr[i] with the element at random index
+    let save = arr[i];
+    arr[i] = arr[j];
+    arr[j] = save;
+  }
+  return arr;
+}
+
 const HoverCarousel = () => {
   var titles = [];
   var images = [];
@@ -98,6 +113,14 @@ const HoverCarousel = () => {
     isError = false;
   }
 
+  var temp = [];
+  titles = [];
+  data.map((datae) => {
+    temp.push(datae.url);
+    titles.push(datae.title);
+    images = [...temp];
+  });
+
   // if (isLoading) {
   //   return <div style={{ color: "white" }}>Data is loading...</div>;
   // }
@@ -105,11 +128,17 @@ const HoverCarousel = () => {
   //   return <div style={{ color: "white" }}>Error! {error.message}</div>;
   // }
 
+  //# Driver program to test above function.
+  var arr = data;
+  var n = arr.length;
+  console.log(randomize(arr, n));
+
+  temp = [];
+  titles = [];
   data.map((datae) => {
-    var temp = [];
     temp.push(datae.url);
     titles.push(datae.title);
-    images = images.concat(temp);
+    images = [...temp];
   });
 
   return (
