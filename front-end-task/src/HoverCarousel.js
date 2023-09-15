@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import $, { data } from "jquery";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
@@ -24,9 +24,13 @@ function randomize(arr, n) {
   return arr;
 }
 
+var titles = [];
+var images = [];
+var randomized = false;
+
 const HoverCarousel = () => {
-  var titles = [];
-  var images = [];
+  const [, updateState] = React.useState();
+  const forceUpdate = React.useCallback(() => updateState({}), []);
 
   useEffect(() => {
     const scope = $(".carousel");
@@ -99,85 +103,119 @@ const HoverCarousel = () => {
     };
   }, [images]);
 
-  var returnedphotos = JSON.parse(sessionStorage.getItem("photos"));
+  if (!randomized) {
+    var photos = sessionStorage.getItem("photos");
 
-  var { isLoading, isError, error, data } = useQuery(["users"], fetchData, {
-    skip: returnedphotos === true,
-  });
+    var returnedphotos = undefined;
 
-  if (!returnedphotos) {
-    sessionStorage.setItem("photos", JSON.stringify(data));
-  } else {
-    data = returnedphotos;
-    isLoading = true;
-    isError = false;
+    if (photos !== undefined && photos !== null) {
+      returnedphotos = JSON.parse(photos);
+    }
   }
 
-  var temp = [];
-  titles = [];
-  data.map((datae) => {
-    temp.push(datae.url);
-    titles.push(datae.title);
-    images = [...temp];
+  var { isLoading, isError, error, data } = useQuery(["users"], fetchData, {
+    skip: photos !== undefined && photos !== null && !randomized,
   });
 
-  // if (isLoading) {
-  //   return <div style={{ color: "white" }}>Data is loading...</div>;
-  // }
-  // if (isError) {
-  //   return <div style={{ color: "white" }}>Error! {error.message}</div>;
-  // }
+  if (!randomized) {
+    if (!returnedphotos && data) {
+      sessionStorage.setItem("photos", JSON.stringify(data));
+    } else if (returnedphotos !== [] && returnedphotos) {
+      data = returnedphotos;
+      isLoading = false;
+      isError = false;
+    } else {
+      data = [];
+    }
+    let temp = [];
+    titles = [];
+
+    data.map((datae) => {
+      temp.push(datae.url);
+      titles.push(datae.title);
+    });
+
+    images = [...temp];
+  }
+
+  if (isLoading) {
+    return <div style={{ color: "white" }}>Data is loading...</div>;
+  }
+  if (isError) {
+    return <div style={{ color: "white" }}>Error! {error.message}</div>;
+  }
 
   //# Driver program to test above function.
-  var arr = data;
-  var n = arr.length;
-  console.log(randomize(arr, n));
-
-  temp = [];
-  titles = [];
-  data.map((datae) => {
-    temp.push(datae.url);
-    titles.push(datae.title);
-    images = [...temp];
-  });
 
   return (
-    <div
-      className="carousel"
-      style={{
-        border: "2px solid #73AD21",
-        overflow: "hidden",
-        position: "relative",
-        width: "100%",
-        cursor: "grab",
-      }}
-    >
-      <ul
+    <>
+      <div
+        className="carousel"
         style={{
-          listStyle: "none",
-          display: "flex",
-          padding: 0,
-          margin: 0,
-          whiteSpace: "nowrap",
-          transition: "transform 0.2s ease",
+          border: "2px solid #73AD21",
+          overflow: "hidden",
+          position: "relative",
+          width: "100%",
+          cursor: "grab",
         }}
       >
-        {/* Render images */}
-        {images.map((src, index) => (
-          <li
-            key={index}
-            style={{ display: "inline-block", width: "33.33%", flexShrink: 0 }}
-          >
-            <p style={{ color: "white" }}>{titles[index]}</p>
-            <img
-              src={src}
-              alt={`Carousel Item ${index + 1}`}
-              style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            />
-          </li>
-        ))}
-      </ul>
-    </div>
+        <ul
+          style={{
+            listStyle: "none",
+            display: "flex",
+            padding: 0,
+            margin: 0,
+            whiteSpace: "nowrap",
+            transition: "transform 0.2s ease",
+          }}
+        >
+          {/* Render images */}
+          {images.map((src, index) => (
+            <li
+              key={index}
+              style={{
+                display: "inline-block",
+                width: "33.33%",
+                flexShrink: 0,
+              }}
+            >
+              <p style={{ color: "white" }}>{titles[index]}</p>
+              <img
+                src={src}
+                alt={`Carousel Item ${index + 1}`}
+                style={{ width: "100%", height: "100%", objectFit: "cover" }}
+              />
+            </li>
+          ))}
+        </ul>
+      </div>
+      <button
+        style={{ position: "fixed" }}
+        onClick={() => {
+          // let pastimages = images;
+
+          let arr = [...data];
+          let n = arr.length;
+          data = randomize(arr, n);
+
+          let temp = [];
+          titles = [];
+
+          data.map((datae) => {
+            temp.push(datae.url);
+
+            titles.push(datae.title);
+          });
+
+          images = [...temp];
+          randomized = true;
+
+          forceUpdate();
+        }}
+      >
+        Randomize{" "}
+      </button>
+    </>
   );
 };
 
