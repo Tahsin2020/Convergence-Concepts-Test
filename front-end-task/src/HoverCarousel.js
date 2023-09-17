@@ -172,19 +172,31 @@ const HoverCarousel = () => {
           {/* Render images */}
           {images.map((src, index) => (
             <li
+              className="article"
               key={index}
               style={{
                 display: "inline-block",
                 width: "33.33%",
                 flexShrink: 0,
+                backgroundImage: `url(${src})`,
+                height: "33.3%",
               }}
             >
-              <p style={{ color: "white" }}>{titles[index]}</p>
-              <img
+              <p
+                style={{
+                  color: "white",
+                  width: "100%",
+                  height: "100%",
+                  objectFit: "cover",
+                }}
+              >
+                {titles[index]}
+              </p>
+              {/*<img
                 src={src}
                 alt={`Carousel Item ${index + 1}`}
                 style={{ width: "100%", height: "100%", objectFit: "cover" }}
-              />
+              /> */}
             </li>
           ))}
         </ul>
