@@ -176,22 +176,22 @@ const HoverCarousel = () => {
               key={index}
               style={{
                 display: "inline-block",
-                width: "33.33%",
                 flexShrink: 0,
                 backgroundImage: `url(${src})`,
                 height: "33.3%",
               }}
             >
-              <p
+              <h1
+                className="box"
                 style={{
                   color: "white",
-                  width: "100%",
-                  height: "100%",
+                  width: "600px",
+                  height: "600px",
                   objectFit: "cover",
                 }}
               >
                 {titles[index]}
-              </p>
+              </h1>
               {/*<img
                 src={src}
                 alt={`Carousel Item ${index + 1}`}
