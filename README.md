@@ -1,7 +1,7 @@
 # Convergence-Concepts-Test
 This is a repository for the front and back end tasks given to me by Convergence Concepts.
 
-#FE (front end) exercise:
+## FE (front end) exercise:
 
 Platform: React
 
@@ -17,7 +17,7 @@ The photos that are downloaded must be cached so that if the app is terminated, 
 
 Add a button to the screen below the scrollable photo list. Tapping this button will reorder the list in completely random order. Use a recursive function to reorder the list.
 
-#What I learned from the FE (front end) exercise:
+## What I learned from the FE (front end) exercise:
 
 I learned that CSS is difficult, but there are many solutions to the same problem. Like to put text over an image? Use a background image on a div. Many CSS solutions can be borrowed, but one should learn CSS on their own to create customized solutions, same with JS.
 
