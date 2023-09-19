@@ -22,7 +22,7 @@ Requirements: Create a simple web app that accomplishes the following:
 * I learned React has limits on the number of updates it can do, and as such requires careful updating, and recursively modifying an array can cause absurd amount of updates to the DOM.
 * I learned about Session Storage, Caching, requesting and saving JSON data in React
 
-## 1: BE (back end) exercise
+## BE (back end) exercise
 
 Overview: A simple CRUD API, for users to read, create, update and delete to-do list items.
 
