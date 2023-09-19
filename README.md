@@ -20,4 +20,27 @@ Requirements: Create a simple web app that accomplishes the following:
 * I learned about how to make a scrolling function for a Horizontal Carousel of Images, by borrowing from a prepared npm package. 
 * I learned that a lot of difficult problems have been solved already, and can be modified for your situation.
 * I learned React has limits on the number of updates it can do, and as such requires careful updating, and recursively modifying an array can cause absurd amount of updates to the DOM.
-* I learned about Session Storage, Caching, requesting and saving JSON data in React 
+* I learned about Session Storage, Caching, requesting and saving JSON data in React
+
+## 1: BE (back end) exercise
+
+Overview: A simple CRUD API, for users to read, create, update and delete to-do list items.
+
+Requirements:
+
+* Use Node.js
+* A User should be able to create "todo" items, which can be viewed (read) by all users.
+* Only the owner of a todo item can update or delete a todo item
+* A user can use the REST API to search to-do items by different filters. (e.g. description, category - up to you)
+* A login endpoint with simple authentication logic
+* Validation and error handling where it is considered appropriate
+
+Notes:
+* The API does not actually need to be deployed or hosted; the code is sufficient
+* It may be easiest to simply share a public GitHub repo URL
+* The DB layer will be assumed to exist (it also does not need to be running)
+* A "todo" entity can be whatever you want it to be. The back end can be as simple as you consider appropriate.
+
+Bonus:
+* Use GraphQL
+* Database connection/configuration setup (DB engine of choice - again, no hosted DB is expected to be provided)
